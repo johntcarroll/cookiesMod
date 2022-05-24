@@ -29,7 +29,13 @@ const numberShortener = (baseNumber) =>
     ? Number(baseNumber) / (1.0e9).toFixed(2) + " Billion"
     : Number(baseNumber) >= 1.0e6
     ? (Number(baseNumber) / 1.0e6).toFixed(2) + "Million"
-    : Number(baseNumber).toFixed(2);
+    :  Number(baseNumber) <= 1.0e-6
+    ? (Number(baseNumber) * 1.0e6).toFixed(2) + "Millioniths"
+    : Number(baseNumber) <= 1.0e-9
+    ? (Number(baseNumber) * 1.0e9).toFixed(2) + "Billioniths"
+    : Number(baseNumber) <= 1.0e-12
+    ? (Number(baseNumber) * 1.0e12).toFixed(2) + "Trillioniths"
+    : Number(baseNumber).toFixed(6);
 
 // should prefix any injected dom data
 const INJECTION_PREFIX = "cookies_mod";
@@ -69,7 +75,7 @@ const callback = function (mutationList, observer) {
     const myCps = numberLengthener(myCpsString.replace("per second : ", ""));
 
     // infered values
-    const cookiesPerCps = cost / cps;
+    const cookiesPerCps = cps / cost;
     const secondsTilPurchase = cost > cookies ? (cost - cookies) / myCps : 0;
     const minsTilPurchase = secondsTilPurchase / 60;
     const hoursTilPurchase = minsTilPurchase / 60;
