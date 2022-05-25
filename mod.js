@@ -19,22 +19,32 @@ const numberLengthener = (baseString) =>
         return +baseString.replace(` trillion`, "").replace(/,/g, "") * 1.0e12;
       },
     },
+    {
+      used: baseString.includes("quadrillion"),
+      get numberVal() {
+        return +baseString.replace(` quadrillion`, "").replace(/,/g, "") * 1.0e15;
+      },
+    },
   ].find((formatter) => formatter.used)?.numberVal ||
   +baseString.replace(/,/g, "");
 
 const numberShortener = (baseNumber) =>
-  Math.abs(Number(baseNumber)) >= 1.0e12
+  Math.abs(Number(baseNumber)) >= 1.0e15
+    ? (Number(baseNumber) / 1.0e15).toFixed(2) + " Quadrillion"
+    : Math.abs(Number(baseNumber)) >= 1.0e12
     ? (Number(baseNumber) / 1.0e12).toFixed(2) + " Trillion"
     : Math.abs(Number(baseNumber)) >= 1.0e9
     ? Number(baseNumber) / (1.0e9).toFixed(2) + " Billion"
     : Number(baseNumber) >= 1.0e6
     ? (Number(baseNumber) / 1.0e6).toFixed(2) + "Million"
+    : Number(baseNumber) <= 1.0e-15
+    ? (Number(baseNumber) * 1.0e12).toFixed(2) + "Quadrillionths"
     : Number(baseNumber) <= 1.0e-12
-    ? (Number(baseNumber) * 1.0e12).toFixed(2) + "Trillioniths"
+    ? (Number(baseNumber) * 1.0e12).toFixed(2) + "Trillionths"
     : Number(baseNumber) <= 1.0e-9
-    ? (Number(baseNumber) * 1.0e9).toFixed(2) + "Billioniths"
+    ? (Number(baseNumber) * 1.0e9).toFixed(2) + "Billionths"
     :  Number(baseNumber) <= 1.0e-6
-    ? (Number(baseNumber) * 1.0e6).toFixed(2) + "Millioniths"
+    ? (Number(baseNumber) * 1.0e6).toFixed(2) + "Millionths"
     : Number(baseNumber).toFixed(6);
 
 // should prefix any injected dom data
