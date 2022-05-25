@@ -38,7 +38,7 @@ const numberShortener = (baseNumber) =>
     : Number(baseNumber) >= 1.0e6
     ? (Number(baseNumber) / 1.0e6).toFixed(2) + "Million"
     : Number(baseNumber) <= 1.0e-15
-    ? (Number(baseNumber) * 1.0e12).toFixed(2) + "Quadrillionths"
+    ? (Number(baseNumber) * 1.0e15).toFixed(2) + "Quadrillionths"
     : Number(baseNumber) <= 1.0e-12
     ? (Number(baseNumber) * 1.0e12).toFixed(2) + "Trillionths"
     : Number(baseNumber) <= 1.0e-9
